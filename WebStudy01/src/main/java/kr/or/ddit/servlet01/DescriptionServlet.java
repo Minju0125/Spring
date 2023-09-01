@@ -43,6 +43,9 @@ import javax.servlet.http.HttpServletResponse;
  * 5. HttpSession : 한 클라이언트가 하나의 에이전트를 대상으로 운영되는 객체로 한 세션에 대한 정보를 가진 객체.
  */
 public class DescriptionServlet extends HttpServlet{
+	
+	do
+	
 	@Override
 	public void init(ServletConfig config) throws ServletException {
 		super.init(config); //init 메소드에서는 이거 지우면 안됨
