@@ -70,5 +70,6 @@ public class ImageFormServlet_ver4 extends HttpServlet{
 		req.setAttribute("options", options);
 		
 		req.getRequestDispatcher("/WEB-INF/views/04/imageForm.jsp").forward(req, resp);
+		
 	}
 }

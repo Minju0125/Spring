@@ -60,6 +60,8 @@ background-color: red;
 		<input type="text" name="param3" value="value3"/>
 		<input type="text" name="param3" value="value3-1"/>
 		<input type="text" name="param4" value="value4"/>
+		<input type="date" name="date1"/>
+		<input type="datetime-local" name="date2"/>
 		<input type="submit" value="전송"/>
 	</form>
 </div>
