@@ -17,11 +17,9 @@
    String monthParam = request.getParameter("month");
    String localeParam = request.getParameter("locale");
    
-   //Optional로 감싸는 값이 null 일수도 있고, 아닐수도 있을때 사용
-   //초기에 아무값도 선택하지 않으면 null 일수도 있음 (localParam)
    Locale locale = Optional.ofNullable(localeParam)
    		  					.map(lp->Locale.forLanguageTag(lp)) //여기서 lp은 localeParam(문자열))
-		 					.orElse(request.getLocale()); //파라미터로 선택되어 넘어온 locale 값이 없는 경우 orElse 실행
+		 					.orElse(request.getLocale());
 
    //Locale locale = request.getLocale();   //reqeust header(Accept-Language)
    
@@ -84,7 +82,7 @@
 	<select name="month">
 	<%=
 	Stream.of(Month.values())
-		  .map(m->{ //스트림내부 요소 하나하나에 접근해서 map 원하는 형태로 데이터 매핑
+		  .map(m->{
 			  String selected = m.equals(targetMonth.getMonth()) ? "selected" : "" ;
 			  String display = m.getDisplayName(TextStyle.FULL, locale);
 			  return String.format(OPTPTRN, m.getValue(), selected, display);
@@ -116,45 +114,6 @@
 	</select>
 </form>
 
-<table>
-   <thead>
-      <tr>
-      <%
-         WeekFields weekFields = WeekFields.of(locale);
-         DayOfWeek firstDayOfWeek = weekFields.getFirstDayOfWeek();
-         String ptrn = "<td class='%2$s'>%1$s</td>";
-//          DayOfWeek[] weeks = DayOfWeek.values();
-         for(int col=0; col<7; col++){
-            DayOfWeek tmp = firstDayOfWeek.plus(col);
-            out.println(
-               String.format(ptrn, tmp.getDisplayName(TextStyle.SHORT, locale), tmp.name())
-            );
-         }
-      %>
-      </tr>
-   </thead>
-   <tbody>
-      <%
-         LocalDate firstDate = targetMonth.atDay(1);
-         int offset = firstDate.get(weekFields.dayOfWeek()) -firstDayOfWeek.get(weekFields.dayOfWeek());
-         LocalDate date = firstDate.minusDays(offset);
-         for(int row=0; row<6; row++){
-            out.println("<tr>");
-            for(int col=0; col<7; col++){
-               YearMonth thisMonth = YearMonth.from(date);
-   
-               String clz = thisMonth.isBefore(targetMonth)? "before":
-                  thisMonth.isAfter(targetMonth) ? "after" : date.getDayOfWeek().name();
-               out.println(
-                  String.format(ptrn, date.getDayOfMonth(), clz)
-               );
-               date = date.plusDays(1);
-            }
-            out.println("</tr>");
-         }
-      %>
-   </tbody>
-</table>
 <script type="text/javascript">
 	function clickHandler(event){
 		console.log(event);

@@ -44,7 +44,6 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class DescriptionServlet extends HttpServlet{
 	
-	do
 	
 	@Override
 	public void init(ServletConfig config) throws ServletException {
