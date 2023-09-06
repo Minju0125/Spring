@@ -1,7 +1,7 @@
 <%@page import="java.time.temporal.WeekFields"%>
 <%@page import="java.time.Month"%>
-<%@page import="java.util.List"%>
 <%@page import="java.util.stream.Collectors"%>
+<%@page import="java.text.MessageFormat"%>
 <%@page import="java.util.stream.Stream"%>
 <%@page import="java.time.Year"%>
 <%@page import="java.util.Optional"%>
@@ -12,36 +12,13 @@
 <%@page import="java.time.DayOfWeek"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%
-   String yearParam = request.getParameter("year");
-   String monthParam = request.getParameter("month");
-   String localeParam = request.getParameter("locale");
-   
-   Locale locale = Optional.ofNullable(localeParam)
-   		  					.map(lp->Locale.forLanguageTag(lp)) //여기서 lp은 localeParam(문자열))
-		 					.orElse(request.getLocale());
 
-   //Locale locale = request.getLocale();   //reqeust header(Accept-Language)
-   
-   int year = Optional.ofNullable(yearParam)
-               .filter((yp)->yp.matches("\\d{4}"))
-               .map((yp)->Integer.parseInt(yp))
-               .orElse(Year.now().getValue());
-
-   
-   YearMonth targetMonth = Optional.ofNullable(monthParam)
-                        .filter((mp)->mp.matches("[1-9]|1[0-2]"))
-                        .map((mp)->Integer.parseInt(mp))
-                        .map((m)->YearMonth.of(year, m))
-                        .orElse(YearMonth.now());
-   YearMonth beforeMonth = targetMonth.minusMonths(1);
-   YearMonth nextMonth = targetMonth.plusMonths(1);
-%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <style>
    .before,.after{
       color: silver;
@@ -65,67 +42,103 @@
 </style>
 </head>
 <body>
-<h4>
-<a href="javascript:;" onclick="clickHandler(event);" data-year="<%=beforeMonth.getYear()%>" data-month="<%=beforeMonth.getMonthValue()%>">&lt;&lt;&lt;</a> <!-- data- : data속성 (키밸류 생성됨)-->
-<%=String.format(locale, "%1$tY, %1$tB", targetMonth) %>
-<a href="javascript:;" onclick="clickHandler(event);" data-year="<%=nextMonth.getYear()%>" data-month="<%=nextMonth.getMonthValue()%>">&gt;&gt;&gt;</a>
-<!-- 모든 이벤트 핸들러는  -->
-<!-- 1. 이벤트 핸들러 안에서는 발생한 이벤트에 대한 레퍼런스를 처리할 수 있어야함 -->
-<!-- 2. 모든 이벤트 객체는 그 이벤트를 발생시킨 타켓에 대한 정보를 가지고 있다. -->
-</h4>
-<%!
-	final String OPTPTRN = "<option value='%s' %s>%s</option>";
-%>
 
-<form id="calForm" onchange="this.requestSubmit()" method="post">
-	<input type="number" name="year" value="<%=targetMonth.getYear()%>"/>
-	<select name="month">
-	<%=
-	Stream.of(Month.values())
-		  .map(m->{
-			  String selected = m.equals(targetMonth.getMonth()) ? "selected" : "" ;
-			  String display = m.getDisplayName(TextStyle.FULL, locale);
-			  return String.format(OPTPTRN, m.getValue(), selected, display);
-		}).collect(Collectors.joining("\n"))
-// 					.map((m)->{
-// 					String selected = m.equals() ? "selected" : "";
-// 			    	return String.format(OPTPTRN, l.toLanguageTag(), selected, l.getDisplayName(l));
-// 					})
-				
-	%>
-	</select>
-	<select id = "localeText" name="locale"  onchange="console.log(this);">
-		<%=
-			/*
+<%!
+   final String OPTPTRN = "<option value='%s'>%s</option>";
+%>
+<%
+   Locale locale = request.getLocale();
+%>
+<form id="calForm" onchange="this.requestSubmit();" method="post"
+   action="<%=request.getContextPath() %>/calendar">
+   <input type="number" name="year"/>
+   <select name="month">
+   <%=
+      Stream.of(Month.values())
+         .map((m)->{
+            String display = m.getDisplayName(TextStyle.FULL, locale);
+            return String.format(OPTPTRN, m.getValue(), display);
+            })
+         .collect(Collectors.joining("\n"))
+   %>
+   </select>
+   <select name="locale">
+      <%=
          //Locale -> Option Tah String : map
          //element collection : collect(Collectors)         
-         Stream.of(Locale.getAvailableLocales())
-            .filter((l)->!l.getDisplayName(locale).isEmpty())
-                .map((l)->String.format("<option value='%1$s' %3$s>%2$s</option>", l.toLanguageTag(), l.getDisplayName(l), l.toLanguageTag().equals(localeParam)?"selected":""))
-                .collect(Collectors.joining("\n"))
-         	*/
-         	Stream.of(Locale.getAvailableLocales())
+            Stream.of(Locale.getAvailableLocales())
             .filter((l)->!l.getDisplayName(locale).isEmpty())
                 .map((l)->{
-                	String selected = l.equals(locale) ? "selected" : "";
-                	return String.format(OPTPTRN, l.toLanguageTag(), selected, l.getDisplayName(l));
+                   return String.format(OPTPTRN, l.toLanguageTag(), l.getDisplayName(l));
                 }).collect(Collectors.joining("\n"))
          %>
-	</select>
+   </select>
 </form>
-
+<div id="resultArea">
+</div>
 <script type="text/javascript">
-	function clickHandler(event){
-		console.log(event);
-		let aTag = event.target;
-		//html 은 dataset으로 관리함
-		console.log(aTag.dataset);
-		let year = aTag.dataset.year
-		let month = aTag.dataset["month"]
-		calForm.year.value = year; //year라는 input 태그에 접근
-		calForm["month"]["value"] = month; //자바 스크립트가 동적타입 언어이기 때문에 => 객체 구조를 동적으로 자유롭게 변경가능
-		calForm.requestSubmit();
-	}
+	//selector : ex) $("#calForm") - HtmlElement를 jQuery 객체로 wrapping 함.
+	//				Integer : wrapper class, int -> new Integer(3) (adaptor), adaptor design pattern
+	
+	//console.log(calForm);  
+	//console.log($(calForm)); 
+	
+	//모든 입력 태그가 대상이 됨 (select, button까지)
+	//name 속성 있으면 전송 목적
+	//name 속성이 있는 input 태그
+	$(":input[name]").on("change", function(event){ //여기서 받은 event => change
+		event.target.form.requestSubmit();
+		this.form.requestSubmit();
+ 	});
+	
+	$(calForm).on("submit",  function(event){ //여기서 받은 event => submit
+		event.preventDefault(); //고유의 행동을 중단 
+		//form의 submit 은 동기요청 (이 동기요청을 중단)
+		console.log(event.target);
+		console.log(this); // 여기서 this 는 html element
+		console.log($(this)); // 제이쿼리 객체로 wrapping
+		// 동기 요청 -> 비동기 요청으로 전환
+		// 요청의 기본적인 객체를 가지고 있는 form 의 기본적인 특성은 변하지 않음
+		// 원래의 element 인 form 이 가지고 있는 조건을 가져와야함
+		let url = this.action;  //form의 action 속성
+		let method = this.method;
+		
+		//serialize(제이쿼리 함수 => 제이쿼리 객체로 생성을 해야 사용할 수 있음)
+		// year month locale
+		// ex) year=20&month=8&locale=ko-KR
+		let data = $(this).serialize();
+		
+		//form에서 넘어온 데이터
+		let settings = {
+			//요청을 어떻게 보낼 것인지
+			url:url,
+			mehtod:method,
+			data:data,
+			
+			//응답데이터
+			//응답데이터의 형태 (달력을 출력할 table 태그가 필요하기 때문에)
+			dataType:"html",
+			success:function(resp){
+				$(resultArea).html(resp);
+			}
+		};
+		$.ajax(settings);
+	});
+	
+	//동적 element 에 대한 핸들링 필요한 경우에는 이런식으로 처리해야함
+	$("#resultArea").on("click", "a", function(){
+		console.log("a tag click!!!");
+		//원래 데이터 타입을 그대로 받을 수 있음
+		let year = $(this).data("year"); //제워쿼리 객체
+		let month = $(this).data("month");
+		let locale = $(this).data("locale");
+      	calForm.year.value = year;
+	    calForm["month"]["value"] = month;
+	    //calForm.requestSubmit(); //이건 html element 함수
+	    //requestSubmit을 쓴 이유 : event 발생시키기 떄문에 위에 있는 함수 발생
+	    //여기서 submit 쓰면 이벤트 발생없이 그냥 전송
+	    $(calForm).submit(); //제이쿼리 함수로 쓰면 이벤트핸들러 작동
+	}) 
 </script>
 </body>
 </html>

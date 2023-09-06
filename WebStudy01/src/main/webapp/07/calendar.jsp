@@ -25,7 +25,8 @@
 
    //Locale locale = request.getLocale();   //reqeust header(Accept-Language)
    
-   int year = Optional.ofNullable(yearParam)
+   
+   int year = Optional.ofNullable(yearParam) 
                .filter((yp)->yp.matches("\\d{4}"))
                .map((yp)->Integer.parseInt(yp))
                .orElse(Year.now().getValue());
