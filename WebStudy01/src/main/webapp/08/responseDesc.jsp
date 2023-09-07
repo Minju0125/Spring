@@ -1,5 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" pageEncoding="UTF-8"%>
+<%--
+	response.setContentType("text/plain; charset=UTF-8");
+	response.setContentLengthLong(100);
+--%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,7 +12,7 @@
 <body>
 <h4>HttpServletResponse</h4>
 <pre>
-	1. Response Line : Status Code (응답상태 코드)
+	1. Response Line : Status Code (응답상태 코드) - response.sendError(sc[, message]), setStatus(sc)
 		Status Code : 서버에서 요청 처리 결과의 성공 여부를 표현하는 상태 코드
 				Http : connectLess + stateLess
 			100~ : ING~ WebSocket (connectFull)
@@ -39,8 +42,30 @@
 					request header(Content-type) ** request entity = request body
 					
 			500~ : 처리실패의 원인이 서버 측에 있을 때. 500 (Internal Server Error)
-	2. Response Header
+	2. Response Header : response.set[Int|Date]Header(name,value), addHeader...
+		1) Content-* : Content-Type, Content-Length - response body 컨텐츠를 수식해줌
+		2) Cache 제어 : Cache-Control(Http ver 1.1), Expires, Pragma(Http ver 1.0)
+		<%
+			response.setHeader("Cache-Control", "no-cache");
+			response.addHeader("Cache-Control", "no-store"); //경우에 따라 no-cache 해석 못하고 no-store만 인식하는 브라우저가 있음 ! "add"
+			response.setHeader("Pragma", "no-cache");
+			response.addHeader("Pragma", "no-store");
+			response.setDateHeader("Expires", 0); //1970년 1월 1일 0시 0분 0초로 셋팅 -> 캐시를 남기지 말라는 의미
+			//특정 클라이언트를 타켓팅하면 안되기 때문에 Cach-controll, pragma 
+			
+		%>
+			- 응답 데이터의 모든 기준은 클라이언트
+				-> 클라이언트는 불특정 다수이며, 1.0을 쓸지, 1.1을 쓸지 모르기 때문에 둘다 사용 (=웹 표준화) - 접근성 보장
+		3) Auto Request : Refresh
+			<a href="/08/autoRequest.jsp">auto request</a>
+		4) Redirection : Location
+			
 	3. Response Body(Content Body, Message Body)
+		** channel 은 양방향 / stream 은 단방향
+			=> 데이터 기록할 때 일반적으로 stream으로 . 단방향이기 때문에 입력스트림&출력스트림
+		response.getWriter() : char 기반의 문자 컨텐츠를 기록할 출력스트림
+		response.getOutputStream() : byte 기반의 스트림(binary) 컨텐츠를 기록할 출력스트림
+			** Stream 일련의 바이트 집합 : 바이트 계열 
 </pre>
 </body>
 </html>
