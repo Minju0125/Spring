@@ -35,6 +35,6 @@ $(function(){
 		  //settings.success = fnSuccesses.json//json 이라는 함수를 success 
 		  //settings.success = fnSuccesses.html//json 이라는 함수를 success => * html을 식별자로
 		  settings.success = fnSuccesses[settings.dataType]
-	      $.ajax(settings)
+	      $.ajax(settings) //비동기요청
 	   }, 1000);
 })
