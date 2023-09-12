@@ -3,37 +3,27 @@
 	xmlns="http://xmlns.jcp.org/xml/ns/javaee"
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
 	version="3.1"
-	
 	metadata-complete="false"
-	
 	>
 	<display-name>WebStudy01</display-name>
 	<welcome-file-list>
-		<welcome-file>index.html</welcome-file>
-		<welcome-file>index.htm</welcome-file>
-		<welcome-file>index.jsp</welcome-file>
-		<welcome-file>default.html</welcome-file>
-		<welcome-file>default.htm</welcome-file>
-		<welcome-file>default.jsp</welcome-file>
+		<welcome-file>index.do</welcome-file>
 	</welcome-file-list>
-
-	<!--어플리케이션을 대상으로 전달되는 파라미터 -->
 	<context-param>
 		<param-name>imageFolder</param-name>
-		<param-value>D:/02.medias/images</param-value>
+		<param-value>D:\01.medias\images</param-value>
 	</context-param>
-
+	
 	<servlet>
 		<servlet-name>DescriptionServlet</servlet-name>
 		<servlet-class>kr.or.ddit.servlet01.DescriptionServlet</servlet-class>
 		<init-param>
 			<param-name>param_name</param-name>
-			<param-value>param value</param-value>
+			<param-value>param_value</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
-		
 	</servlet>
-	
+
 	<servlet-mapping>
 		<servlet-name>DescriptionServlet</servlet-name>
 		<url-pattern>/desc</url-pattern>

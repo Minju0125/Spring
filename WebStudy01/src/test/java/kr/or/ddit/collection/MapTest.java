@@ -1,5 +1,7 @@
 package kr.or.ddit.collection;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.YearMonth;
@@ -15,18 +17,21 @@ class MapTest {
 
 	@Test
 	void test() {
-		Map<String, Object> sampleMap = new HashMap<>();
+		Map<String, Object> sampleMap = new HashMap<String, Object>();
 		sampleMap.put("key1", new Date());
 		sampleMap.put("key2", Calendar.getInstance());
-		sampleMap.put("key3", LocalDateTime.now()); //immutable 변경 불가능함
+		sampleMap.put("key3", LocalDateTime.now());
 		sampleMap.put("key4", LocalDate.now());
 		sampleMap.put("key5", YearMonth.now());
 		
+		
 		for(Entry<String, Object> entry : sampleMap.entrySet()) {
-			System.out.printf("%s : %s\n", entry.getKey(), entry.getValue());
+			System.out.printf("%s : %s\n",entry.getKey(), entry.getValue());
 		}
+		
+		// Epoch time (Unix time)
+		// GMT
+		
 	}
-	//Epoch time (Unix time)
-	//GMT 표준시간대 ()
 
 }

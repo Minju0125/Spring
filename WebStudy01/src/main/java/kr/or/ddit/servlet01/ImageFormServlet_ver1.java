@@ -38,10 +38,7 @@ public class ImageFormServlet_ver1 extends HttpServlet{
 			
 			@Override
 			public boolean accept(File dir, String name) {
-				//마임타입을 가져와서 이게 image 로 시작하는지 확인하기
 				String mime = application.getMimeType(name);
-				//hwp 는 한국에서만 사용하는 확장자이기 때문에 null 값인지 판단을 해야함
-				//기본적인 mime 타입에 hwp 존재 x
 				return mime!=null && mime.startsWith("image/");
 			}
 		});
@@ -74,13 +71,12 @@ public class ImageFormServlet_ver1 extends HttpServlet{
 		
 		resp.setContentType("text/html;charset=UTF-8");
 		
-		PrintWriter out =null;
+		PrintWriter out = null;
 		try {
 			out = resp.getWriter();
 			out.println(content);
 		}finally {
-			if(out!=null)
-			out.close();
+			if(out!=null) out.close();
 		}
 	}
 }

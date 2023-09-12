@@ -1,21 +1,20 @@
-
  <html>
  <body>
 <form onsubmit='submitHandler(event);' action='#cPath#/image.do'>
  <select name='image' id='image' onchange='this.form.requestSubmit();'>                                 ");
-      #options#
+		#options#
  </select>
  <input type='submit' value='전송'>
  </form>
 <div id="imageArea">
-   
+	
 </div>
  <script>
-    function submitHandler(event) {
-       event.preventDefault();
-       let imageName = image.value;
-       imageArea.innerHTML = `<img src="#cPath#/image.do?image=${imageName}"/>`;
-    }
+ 	function submitHandler(event) {
+ 		event.preventDefault();
+ 		let imageName = image.value;
+ 		imageArea.innerHTML = `<img src="#cPath#/image.do?image=${imageName}"/>`;
+ 	}
  </script>
  </body>
  </html>

@@ -1,0 +1,13 @@
+<html>
+	<head>
+		<style>
+			h4{
+				background-color: red;
+			}
+		</style>
+	</head>
+	<body>
+		<div>#title#</div>
+		<h4>현재 서버의 시각 : #now#</h4>
+	</body>
+</html>

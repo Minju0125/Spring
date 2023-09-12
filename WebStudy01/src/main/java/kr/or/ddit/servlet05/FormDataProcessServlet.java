@@ -16,55 +16,54 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 @WebServlet("/09/formDataProcess")
 public class FormDataProcessServlet extends HttpServlet{
-	//method에 상관없이 처리하려면=> service메소드
-	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		//---------------------언마샬링(컨트롤러)---------------------
-		req.setCharacterEncoding("UTF-8"); //post에서 동작
-		//super.service(req, resp); 이 코드를 삭제한다면 do계열의 메소드를 사용하지 않겠다!는 의미
-		String reqContentType=  req.getContentType(); //post 인 경우에 형성되는 content body 를 가져옴 // 클->서버에게 쓴 편지
+		//컨트롤러의 역할
+		req.setCharacterEncoding("UTF-8");
+		String reqContentType = req.getContentType();
+			// 데이터가 파라미터로 넘어오는지 json으로 넘어오는지 확인
 		Map reqContent = null;
-		
-		//json으로 넘어올 수도 있고, 파라미터로 넘어올 수도 있음
 		if(reqContentType.contains("json")) {
-			//json payload
-			//역직렬화, 언마샬링 -> object mapper 필요
-			//매체로부터 스트림 읽어야함 (request body에서 읽어들일 input stream)
-			InputStream is= req.getInputStream(); //역직렬화 시 사용하는 입력스트림 (역직렬화를 위한 통로)
-			reqContent = new ObjectMapper().readValue(is, HashMap.class); //언마샬링,read계열메소드
-		}else { //파라미터 일 수도 있음
-			reqContent = req.getParameterMap(); //chkParam, multiple 은 여러개를 받을 수 있으니까 String[] 사용
-			reqContent.forEach((k,v)->{ //k:String, v:String[]
+			// json payload가 전송됐을 때 -> 역직렬화와 마셜링 필요
+			// request의 body에서 읽을 inputStream이 필요
+			InputStream is = req.getInputStream();		//역직렬화 할 때 사용할 수 있는 입력 스트림
+				// 역직렬화 통해 byte데이터 읽어들임->읽어들인 json데이터를 Java언어로 번역 : 마셜링
+			reqContent = new ObjectMapper().readValue(is, HashMap.class);
+							// 클라이언트가 서버에게 쓴 편지 - 역직렬화 + 언마셜링까지 해야함 => read
+		}else {
+			// 파라미터일 수도 있을 때
+			reqContent = req.getParameterMap();
+			reqContent.forEach((k,v)->{
 				System.out.printf("%s : %s\n", k, Arrays.toString((String[])v));
 			});
 		}
-
-		Map<String, Object> target = new HashMap<>();
+		
+		//모델의 역할
+		Map<String, Object> target = new HashMap<String, Object>();
 		target.put("message", "파라미터 처리 완료");
 		target.putAll(reqContent);
-		
-		//클라이언트는 요청보낼 때 accept 숨겨서, 응답을 줄때 어떤 걸로 줄지 결정
+		// 응답데이터를 어떤 형태로 보내야하는지 확인
 		String accept = req.getHeader("Accept");
 		
 		
-		//---------------------마샬링(뷰)---------------------
+		//뷰의 역할
+		// information -> content 로 바꿈 -> serialization:직렬화(응답으로 내보냄)
 		String contentType = null;
 		Object content = null;
-
-		//마샬링(information->content)
 		if(accept.contains("json")) {
-			contentType= "application/json; charset=UTF-8";
-			content= new ObjectMapper().writeValueAsString(target);
+			// Map에 있는 데이터를 Json으로 바꿈 -> 마셜링
+			// 네트워크를 통해 가려면 010101~~~로 바뀌어야함 -> 직렬화
+			contentType = "application/json; charset=utf-8";
+			content = new ObjectMapper().writeValueAsString(target);
 		}else if(accept.contains("xml")) {
-			contentType= "application/xml; charset=UTF-8";
-			//태그가 최상위 element 부터 시작해야함
-			content ="<root><message>"+ target.get("message") + "</message></root>";
+			contentType = "application/xml; charset=utf-8";	
+			content = "<root><message"+target.get("message")+"</message></root>";
 		}else {
-			contentType= "text/html; charset=UTF-8";
-			content = "<div>"+ target.get("message") + "</div>";
+			contentType = "text/html; charset=utf-8";
+			content = "<div>"+target.get("message")+"</div>";
 		}
+		
 		resp.setContentType(contentType);
-		resp.getWriter().print(content); //직렬화
+		resp.getWriter().print(content);
 	}
 }
