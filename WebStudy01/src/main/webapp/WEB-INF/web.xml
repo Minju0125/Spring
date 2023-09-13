@@ -28,4 +28,8 @@
 		<servlet-name>DescriptionServlet</servlet-name>
 		<url-pattern>/desc</url-pattern>
 	</servlet-mapping>
+	
+	<session-config>
+		<session-timeout>2</session-timeout>
+	</session-config>
 </web-app>

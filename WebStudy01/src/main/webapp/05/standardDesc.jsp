@@ -43,7 +43,10 @@
 			<%--comment5 --%>
 	 		- client side comment : HTML comment, JS comment, CSS comment  -> 가능하면 사용하지 않도록
 	 		- server side comment : Java comment, JSP comment
-	 	6) action tag
+	 	6) action tag : 커스텀 태그의 일종으로 jsp 스펙에서 기본 제공되는 커스텀 태그
+	 		커스텀 태그 사용 방법
+	 		&lt;prefix:tagName attribute_name="value"/&gt;
+	 		
 	 	7) EL(Expression Language, 표현 언어), \${elVariables}
 	 	8) JSTL(Jsp Standard Tag Library)
 </pre>

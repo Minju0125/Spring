@@ -13,7 +13,8 @@
 String authId = (String)session.getAttribute("authId");
 if(authId!=null){
 %>
-<h4><%=authId %>로그인 성공</h4>
+<form method="post" action="<%=request.getContextPath() %>/login/logout.do" id="logoutForm"></form>
+<h4><%=authId %><a href="javascript:;" id="logoutBtn">로그아웃</a></h4>
 <%
 }else{
 	%>
@@ -22,7 +23,11 @@ if(authId!=null){
 }
 %>
 <script>
-	console.log($);
+	$('#logoutBtn').on('click', function(event){ //여기서 event 는 click 이벤트
+		event.preventDefault();
+		$('#logoutForm').submit(); //제이쿼리로 쓰는거면 submit 사용가능
+		//logoutForm.requestSubmit();
+	});
 </script>
 </body>
 </html>

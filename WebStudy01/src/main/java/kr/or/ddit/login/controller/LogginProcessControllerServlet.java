@@ -37,7 +37,7 @@ public class LogginProcessControllerServlet extends HttpServlet{
 		//1. request body 에 대한 디코딩 설정.
 		req.setCharacterEncoding("UTF-8"); //모든 controller 에서 처음에 쓰이는 코드 !
 		//2. 파라미터 획득
-		String memId =req.getParameter("memId");
+		String memId = req.getParameter("memId");
 		String memPass = req.getParameter("memPass");
 		//3. 요청에 대한 검증
 		boolean valid = validate(memId, memPass); //검증 통과시 true
