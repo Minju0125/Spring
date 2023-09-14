@@ -19,7 +19,8 @@
 <h4>자원의 종류와 식별 방법</h4>
 <pre>
 * 자원을 식별할 때는 변경되는 경로는 사용하지 않는다.
-1. file system resource : 자원의 실제 파일 시스템상의 경로(물리 주소)를 그대로 사용해서 식별함.	- 클라이언트가 접근할 수 없음, 서버만 접근 가능 - 물리주소 사용
+분류기준: 해당 자원에 접근하는 방법
+1. file system resource : 자원의 실제 파일 시스템상의 경로(물리 주소)를 그대로 사용해서 식별함. - 클라이언트가 접근할 수 없음, 서버만 접근 가능 - 물리주소 사용
 	ex) D:\01.medias\images\cute1.png
 	<%
 		File res1 = new File("D:\\01.medias\\images\\cute1.png");
@@ -39,7 +40,7 @@
 	<%
 		}
 	%>
-3. web resource (context resource) : URL 형태의 식별자 체계로 네트워크 반대편의 클라이언트가 접근할 수 있는 자원.
+3. web resource (context resource) : URL 형태의 식별자 체계로 네트워크 반대편의 클라이언트가 접근할 수 있는 자원. - 논리주소&URL
 	ex) http://localhost/WebStudy01/resources/images/cat4.png (URL)
 	<%
 		String logical = "/resources/images/cat4.png";

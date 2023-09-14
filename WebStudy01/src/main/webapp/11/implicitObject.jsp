@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"% buffer="8kb" isErrorPage="false"%>
+	pageEncoding="UTF-8" % buffer="8kb" isErrorPage="false"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,9 +7,10 @@
 <title>Insert title here</title>
 </head>
 <body>
-<h4>JSP 스펙의 기본 객체</h4>
-<pre>
+	<h4>JSP 스펙의 기본 객체</h4>
+	<pre>
 	pageContext(Page Scope) : 가장 먼저 생성되는 기본 객체로 jsp 페이지와 관련된 모든 정보(ex.기본객체)를 가진 객체
+	<%=pageContext.getSession() %>, <%=pageContext.getServletContext() %>
 	HttpServletRequest request(Request Scope) : http 방식에 따라 패키징된 요청에 대한 정보를 가진 객체
 												요청이 전송되면 서버에 의해 생성되고, 그에 대한 응답이 전송되면 삭제됨(stateless)
 	HttpSession session(Session Scope) : 한 클라이언트가 하나의 브라우저를 이용해서 어플리케이션을 사용하기 시작한 순간부터

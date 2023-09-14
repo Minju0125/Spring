@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>11/sessionDesc.jsp</title>
 </head>
 <body>
 <h4>세션 (HttpSession)</h4>
@@ -31,12 +31,8 @@
  			현재 세션 내에서 발생한 마지막 요청 시점 : <%=new Date(session.getLastAccessedTime()) %>
  			1. Cookie
  			2. URL : <a href="sessionDesc.jsp;jsessionid=<%=session.getId()%>">세션 파라미터를 통한 세션 유지</a>
- 			3. SSL : secure socket layer, 오고가는 모든 내용을 암호화
- 					request도 암호화 - 이 안에는 암호문만 존재함
- 					중간 공격자는 request를 가로채도 무슨 뜻인지 모름
- 					=> https (암호화의 유무)
- 					우리는 테스트 못함 , 우리가 쓰는 프로토콜은 http이기 때문에
- 					서버가 인증서 가지고 있어야함
-</pre>
+ 					request line 을 통해 세션 아이디를 공유하는 방식. (취약성 존재)
+ 			3. SSL(Secure Socket Layer) : 암호화 채널을 이용한 세션 아이디 공유 (오고가는 모든 데이터를 암호화) (https)
+ </pre>
 </body>
 </html>
