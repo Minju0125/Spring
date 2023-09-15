@@ -23,7 +23,8 @@ if(message!=null && !message.trim().isEmpty()){ //session 에 message가 있는 
 	<ul>
 		<li>
 		아이디 : <input type="text" name="memId"/>
-		</li>
+			   <input type="checkbox" name="idSave" value="saveId"/> 아이디 저장하기
+		</li> 
 		<li>
 		비밀번호 : <input type="text" name="memPass"/>
 		<input type="submit" value="로그인"/>

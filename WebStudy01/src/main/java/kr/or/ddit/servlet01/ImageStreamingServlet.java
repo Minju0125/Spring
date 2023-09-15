@@ -11,6 +11,7 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.annotation.WebInitParam;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -55,6 +56,11 @@ public class ImageStreamingServlet extends HttpServlet {
 							, MessageFormat.format("{0} 이미지 파일이 없음.", imageName));
 			return;
 		}
+		
+		Cookie imgCookie = new Cookie("imgCookie", imageName);
+		imgCookie.setMaxAge(60*60*24*7);
+		imgCookie.setPath(request.getContextPath());
+		response.addCookie(imgCookie);
 		
 		ServletContext application = getServletContext();
 		String mime = application.getMimeType(imageFile.getName());

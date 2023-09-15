@@ -11,7 +11,7 @@
 	</welcome-file-list>
 	<context-param>
 		<param-name>imageFolder</param-name>
-		<param-value>D:\01.medias\images</param-value>
+		<param-value>D:\02.medias\images</param-value>
 	</context-param>
 	
 	<servlet>

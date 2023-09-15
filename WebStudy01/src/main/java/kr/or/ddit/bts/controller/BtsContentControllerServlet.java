@@ -7,6 +7,7 @@ import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -44,6 +45,12 @@ public class BtsContentControllerServlet extends HttpServlet{
 			resp.sendError(404, String.format("%s에 해당하는 멤버는 없음",memCode));
 			return;
 		}
+		
+		//생성된 쿠키 안에 '누구'라는 정보 들어가 있어야함
+		Cookie btsCookie = new Cookie("btsCookie", memCode);
+		btsCookie.setMaxAge(60*60*24*3);
+		btsCookie.setPath(req.getContextPath()+"/bts");
+		resp.addCookie(btsCookie);
 		
 		String[] memRec = btsMap.get(memCode);
 		req.setAttribute("member", memRec);
