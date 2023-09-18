@@ -61,7 +61,4 @@ public class CalendarVO implements Serializable{
 		return Objects.equals(beforeMonth, other.beforeMonth) && Objects.equals(locale, other.locale)
 				&& Objects.equals(nextMonth, other.nextMonth) && Objects.equals(targetMonth, other.targetMonth);
 	}
-	
-	
-	
 }
