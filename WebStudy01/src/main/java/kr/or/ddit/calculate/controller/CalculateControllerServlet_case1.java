@@ -42,7 +42,7 @@ public class CalculateControllerServlet_case1 extends HttpServlet{
          valid &= false;
          errors.put("rightOp","우측 피연산자 오류");
       }
-      if(opParam==null || opParam.trim().isEmpty() || !opParam.matches("PLUS|MINUS|MULTIPLY|DIVIDE")) {
+      if(opParam==null || opParam.trim().isEmpty() || !opParam.matches("PLUS|MINUS|MULTIPLY|DIVIDE|MODULAR")) {
          valid &= false;
          errors.put("operator","연산자 오류");
       }
@@ -81,6 +81,10 @@ public class CalculateControllerServlet_case1 extends HttpServlet{
             result = leftOp * rightOp;            
             sign = '*';
             break;
+         case "MODULAR":
+        	 result = leftOp % rightOp;            
+        	 sign = '%';
+        	 break;
          default:
             result = leftOp / rightOp;
             break;

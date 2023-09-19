@@ -25,6 +25,7 @@
 		<option value="MINUS">-</option>
 		<option value="MULTIPLY">*</option>
 		<option value="DIVIDE">/</option>
+		<option value="MODULAR">%</option>
 	</select> 
 	<input type="number" name="rightOp" required value="${param.rightOp}"/> 
 	<input type="submit" value="="/>

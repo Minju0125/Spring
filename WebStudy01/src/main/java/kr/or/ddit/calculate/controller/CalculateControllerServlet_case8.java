@@ -100,6 +100,8 @@ public class CalculateControllerServlet_case8 extends HttpServlet{
       req.setCharacterEncoding("UTF-8");
       
       String requestContentType = req.getContentType();
+      String accept = req.getHeader("accept"); //이게 json 이면 json 뷰, html이면 jsp,, xml이면 not acceptable
+      
       
       //deSerialize -> unMarshalling 
       int sc = 200;
@@ -124,7 +126,14 @@ public class CalculateControllerServlet_case8 extends HttpServlet{
       }
       req.setAttribute("calVO", calVO); //정상 처리시 calVO 존재
       
-      String goPage = "/jsonView.view";
+      String goPage= null;
+      if(accept.contains("json")) {
+    	  goPage = "/jsonView.view"; //json 응답
+      }else if(accept.contains("xml")) {
+    	  resp.sendError(HttpServletResponse.SC_NOT_ACCEPTABLE);
+      }else {
+    	  goPage="/WEB-INF/views/calculate/case8/calculateView.jsp"; 
+      }
       
       if(goPage.startsWith("redirect:")) {
          String location = req.getContextPath() + goPage.substring("redirect:".length());
