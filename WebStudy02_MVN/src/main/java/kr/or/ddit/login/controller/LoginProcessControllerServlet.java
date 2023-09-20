@@ -10,21 +10,25 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang3.StringUtils;
+
+import kr.or.ddit.login.service.AuthenticateService;
+import kr.or.ddit.login.service.AuthenticateServiceImpl;
+import kr.or.ddit.vo.MemberVO2;
+
 @WebServlet("/login/loginProcess.do")
 public class LoginProcessControllerServlet extends HttpServlet{
+	private AuthenticateService service = new AuthenticateServiceImpl();
 	
 	//모듈화를 통해 책임 분리 - 검증
-	private boolean validate(String memId, String memPass) {
+	private boolean validate(MemberVO2 member) {
 		//null checking & white space checking
 		boolean valid = true;
-		valid &= memId != null && !memId.trim().isEmpty(); //and 연산 먼저한 후에, true 또는 false 값 할당
-		valid &= memPass != null && !memPass.trim().isEmpty(); //and 연산 먼저한 후에, true 또는 false 값 할당
+		StringUtils.isNotBlank(member.getMemId());
+		
+		valid &= StringUtils.isNotBlank(member.getMemId()); //and 연산 먼저한 후에, true 또는 false 값 할당
+		valid &= StringUtils.isNotBlank(member.getMemPass()); //and 연산 먼저한 후에, true 또는 false 값 할당
 		return valid;
-	}
-	
-	//모듈화를 통해 책임 분리 - 인증
-	private boolean authenticated(String memId, String memPass) {
-		return memId.equals(memPass);
 	}
 	
 	@Override
@@ -37,14 +41,18 @@ public class LoginProcessControllerServlet extends HttpServlet{
 		String memPass = req.getParameter("memPass");
 		String idSave = req.getParameter("idSave"); //saveId/null
 		
+		MemberVO2 inputData = new MemberVO2();
+		inputData.setMemId(memId);
+		inputData.setMemPass(memPass);
+		
 		//3. 요청에 대한 검증
-		boolean valid = validate(memId, memPass); //검증 통과시 true
+		boolean valid = validate(inputData); //검증 통과시 true
 		int sc = 200;
 		String goPage = null;
 		if(valid) {
 			//4-1. 검증 통과
 			//	5-1. 인증 여부 판단
-			boolean authentidated = authenticated(memId, memPass);
+			boolean authentidated = service.authenticate(inputData);
 			HttpSession session= req.getSession();
 			if(authentidated) {
 				//		6-1. 인증 성공

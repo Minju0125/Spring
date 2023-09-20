@@ -53,5 +53,34 @@
 		    <version>12.2.0.1</version>
 		</dependency>
 		
+		<!-- Java Bean 지원-->
+		<dependency>
+		    <groupId>org.projectlombok</groupId>
+		    <artifactId>lombok</artifactId>
+		    <version>1.18.28</version>
+		    <scope>provided</scope>
+		</dependency>
+		
+		<!-- Commons 계열-->
+		<dependency>
+		    <groupId>org.apache.commons</groupId>
+		    <artifactId>commons-lang3</artifactId>
+		    <version>3.13.0</version>
+		</dependency>
+
+		<!-- 단위 테스트 지원-->
+		<dependency>
+		    <groupId>org.junit.jupiter</groupId>
+		    <artifactId>junit-jupiter-engine</artifactId>
+		    <version>5.10.0</version>
+		    <scope>test</scope>
+		</dependency>
+		
+		<!-- reflection 특강용-->
+		<dependency>
+			<groupId>kr.or.ddit</groupId>
+			<artifactId>reflectionTest</artifactId>
+			<version>1.0</version>
+		</dependency>
 	</dependencies>
 </project>

@@ -37,15 +37,12 @@ public class ImageFormServlet_ver2 extends HttpServlet{
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String[] imageFileNames = imageFolder.list((d,n)->
-								Optional.ofNullable(application.getMimeType(n))
-									.orElse("").startsWith("image/"));
-		
+		String[] imageFileNames = imageFolder.list((d,n)->Optional.ofNullable(application.getMimeType(n))
+															.orElse("").startsWith("image/"));
 		
 		String options = Stream.of(imageFileNames)
-			.map((in)-> MessageFormat.format("<option>{0}</option>", in))
-			.collect(Collectors.joining("\n"));
-		
+								.map((in)->MessageFormat.format("<option>{0}</option>", in))
+								.collect(Collectors.joining("\n"));
 		
 		StringBuilder content = new StringBuilder();
 		content.append(" <html>                                   ");
@@ -68,17 +65,23 @@ public class ImageFormServlet_ver2 extends HttpServlet{
 		content.append(" </html>                                  ");
 		
 		resp.setContentType("text/html;charset=UTF-8");
-		
 		// try with resource 구문
-		// try( Closeable 객체 생성 구문 ){ }catch(){}
-		//	-->close해야할 대상이 자동으로 close되기 때문에 finally 사용할 필요X
+		// try( Closable 객체 생성 구문 ){ }catch(exception...){}
 		try(
 			PrintWriter out = resp.getWriter();
 		){
 			out.println(content);
 		}
-
 	}
 }
+
+
+
+
+
+
+
+
+
 
 

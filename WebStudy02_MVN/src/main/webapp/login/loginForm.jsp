@@ -31,5 +31,4 @@ if(message!=null && !message.trim().isEmpty()){ //session 에 message가 있는 
 		</li>
 	</ul>
 </form>
-</body>
 </html>

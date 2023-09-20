@@ -5,4 +5,4 @@
 	CalculateVO calVO = (CalculateVO) request.getAttribute("calVO");
 %>
 <h4>처리한 연산자 종류 : <%=calVO.getOperator() %></h4>
-<%=calVO.getExpression() %>
+<h4><%=calVO.getExpression() %></h4>

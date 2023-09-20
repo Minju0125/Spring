@@ -538,5 +538,20 @@
 		</script>
 	</div>
 <script>
-	console.log("jqueary-->", $);
+	console.log("jquery ---> ", $);
 </script>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	

@@ -8,8 +8,8 @@
 </head>
 <body>
 <%
-String expression =(String) request.getAttribute("expression");
+	String expression = (String) request.getAttribute("expression");
 %>
-<%=expression %>
-</body> 
+<h4><%=expression %></h4>
+</body>
 </html>

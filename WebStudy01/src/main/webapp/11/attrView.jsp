@@ -4,14 +4,14 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>11/attrView.jsp</title>
+<title>Insert title here</title>
 </head>
 <body>
-<pre style="background-color: gold">
-	<%=pageContext.getAttribute("pageAttr")%>
-	<%=request.getAttribute("requestAttr")%>
-	<%=session.getAttribute("sessionAttr")%>
-	<%=application.getAttribute("applicationAttr")%>
+<pre style="background-color: yellow;">
+<%=pageContext.getAttribute("pageAttr") %>
+<%=request.getAttribute("requestAttr") %>
+<%=session.getAttribute("sessionAttr") %>
+<%=application.getAttribute("applicationAttr") %>
 </pre>
 </body>
 </html>

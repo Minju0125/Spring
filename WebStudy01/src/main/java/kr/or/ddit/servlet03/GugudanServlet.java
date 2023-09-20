@@ -9,9 +9,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @WebServlet("/05/gugudan.do")
-public class GugudanServlet extends HttpServlet{
+public class GugudanServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
 		int minDan = 2;
 		int maxDan = 9;
 		String minParam = req.getParameter("minDan");
@@ -23,14 +24,14 @@ public class GugudanServlet extends HttpServlet{
 			// 검증 실패
 			valid = false;
 		}
-		if(minParam!=null && minParam.matches("[2-9]")){
+		if(maxParam!=null && maxParam.matches("[2-9]")){
 			maxDan = Integer.parseInt(maxParam);
 		}else if(maxParam!=null && !maxParam.matches("[2-9]")){
-			// 검증 실패
-			valid = false;
+			valid = false;		
 		}
+		
 		if(!valid){
-			resp.sendError(HttpServletResponse.SC_BAD_REQUEST,"파라미터에 문제 있어 검증 실패");
+			resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "파라미터에 문제 있어 검증 실패");
 			return;
 		}
 		

@@ -42,6 +42,7 @@ public class ImageFormServlet_ver1 extends HttpServlet{
 				return mime!=null && mime.startsWith("image/");
 			}
 		});
+		
 		StringBuilder options = new StringBuilder();
 		for(String imageName : imageFileNames) {
 			options.append(
@@ -70,13 +71,13 @@ public class ImageFormServlet_ver1 extends HttpServlet{
 		content.append(" </html>                                  ");
 		
 		resp.setContentType("text/html;charset=UTF-8");
-		
 		PrintWriter out = null;
 		try {
 			out = resp.getWriter();
 			out.println(content);
 		}finally {
-			if(out!=null) out.close();
+			if(out!=null)
+				out.close();
 		}
 	}
 }

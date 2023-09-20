@@ -4,13 +4,13 @@ import java.io.Serializable;
 import java.util.Objects;
 import java.util.Optional;
 
-import kr.or.ddit.calculate.controller.NumericOperatorType;
+import kr.or.ddit.calculate.NumericOperatorType;
 
 /**
- * 한번의 사칙연산과 관련된 모든 속성을 가진 객체.
- * 
+ * 한번의 사칙 연산과 관련된 모든 속성을 가진 객체.
+ *
  */
-public class CalculateVO implements Serializable{ //직렬화 가능한 VO
+public class CalculateVO implements Serializable{
 	private int leftOp;
 	private int rightOp;
 	
@@ -27,11 +27,11 @@ public class CalculateVO implements Serializable{ //직렬화 가능한 VO
 		this.operator = operator;
 	}
 
-	public int getLeftOp() { //java bean 의 규약에 따라 자동으로 생성
+	public int getLeftOp() {
 		return leftOp;
 	}
 
-	private void setLeftOp(int leftOp) {
+	public void setLeftOp(int leftOp) {
 		this.leftOp = leftOp;
 	}
 
@@ -39,7 +39,7 @@ public class CalculateVO implements Serializable{ //직렬화 가능한 VO
 		return rightOp;
 	}
 
-	private void setRightOp(int rightOp) {
+	public void setRightOp(int rightOp) {
 		this.rightOp = rightOp;
 	}
 
@@ -47,7 +47,7 @@ public class CalculateVO implements Serializable{ //직렬화 가능한 VO
 		return operator;
 	}
 
-	private void setOperator(NumericOperatorType operator) {
+	public void setOperator(NumericOperatorType operator) {
 		this.operator = operator;
 	}
 	
@@ -59,8 +59,8 @@ public class CalculateVO implements Serializable{ //직렬화 가능한 VO
 	
 	public String getExpression() {
 		return Optional.ofNullable(operator)
-					   .map((o)->o.getExpression(leftOp, rightOp))
-					   .orElse("");
+						.map(o->o.getExpression(leftOp, rightOp))
+						.orElse("");
 	}
 
 	@Override
@@ -84,4 +84,21 @@ public class CalculateVO implements Serializable{ //직렬화 가능한 VO
 	public String toString() {
 		return String.format("CalculateVO [%s]", getExpression());
 	}
+	
+	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

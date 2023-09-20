@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
-String expression =(String) request.getAttribute("expression");
+	String expression = (String) request.getAttribute("expression");
 %>
-<%=expression %>
+<h4><%=expression %></h4>

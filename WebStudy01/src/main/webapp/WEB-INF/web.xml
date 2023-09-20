@@ -9,21 +9,21 @@
 	<welcome-file-list>
 		<welcome-file>index.do</welcome-file>
 	</welcome-file-list>
+	
 	<context-param>
 		<param-name>imageFolder</param-name>
-		<param-value>D:\02.medias\images</param-value>
+		<param-value>D:/02.medias/images</param-value>
 	</context-param>
-	
+
 	<servlet>
 		<servlet-name>DescriptionServlet</servlet-name>
 		<servlet-class>kr.or.ddit.servlet01.DescriptionServlet</servlet-class>
 		<init-param>
 			<param-name>param_name</param-name>
-			<param-value>param_value</param-value>
+			<param-value>param value</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
-
 	<servlet-mapping>
 		<servlet-name>DescriptionServlet</servlet-name>
 		<url-pattern>/desc</url-pattern>
@@ -33,3 +33,14 @@
 		<session-timeout>2</session-timeout>
 	</session-config>
 </web-app>
+
+
+
+
+
+
+
+
+
+
+

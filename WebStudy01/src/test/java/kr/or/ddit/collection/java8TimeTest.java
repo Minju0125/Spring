@@ -15,9 +15,9 @@ class Java8TimeTest {
 	
 	@BeforeEach
 	void setUp() {
-		System.out.println("set Up");
+		System.out.println("set up");
 	}
-	
+
 	@Test
 	void test1() {
 		Calendar calendar = Calendar.getInstance();
@@ -27,15 +27,33 @@ class Java8TimeTest {
 		LocalDate today = LocalDate.now();
 		YearMonth thisMonth = YearMonth.now();
 		Year thisYear = Year.now();
-		System.out.printf("now : %s \n",now);
-		System.out.printf("today : %s, %s \n",today, LocalDate.from(now));
-		System.out.printf("thisMonth : %s, %s \n",thisMonth, YearMonth.from(now));
-		System.out.printf("thisYear : %s, %s \n",thisYear, Year.from(now));
+		System.out.printf("now : %s \n", now);
+		System.out.printf("today : %s, %s \n", today, LocalDate.from(now));
+		System.out.printf("thisMonth : %s, %s \n", thisMonth, YearMonth.from(now));
+		System.out.printf("thisYear : %s, %s \n", thisYear, Year.from(now));
 		
 	}
-
+	
 	@Test
 	void test2() {
-		System.out.println("===========");
+		System.out.println("==========");
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

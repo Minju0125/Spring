@@ -17,7 +17,7 @@ class MapTest {
 
 	@Test
 	void test() {
-		Map<String, Object> sampleMap = new HashMap<String, Object>();
+		Map<String, Object> sampleMap = new HashMap<>();
 		sampleMap.put("key1", new Date());
 		sampleMap.put("key2", Calendar.getInstance());
 		sampleMap.put("key3", LocalDateTime.now());
@@ -25,13 +25,32 @@ class MapTest {
 		sampleMap.put("key5", YearMonth.now());
 		
 		
-		for(Entry<String, Object> entry : sampleMap.entrySet()) {
-			System.out.printf("%s : %s\n",entry.getKey(), entry.getValue());
+		for(Entry<String, Object>  entry : sampleMap.entrySet()) {
+			System.out.printf("%s : %s\n", entry.getKey(), entry.getValue());
 		}
 		
 		// Epoch time (Unix time)
 		// GMT
-		
 	}
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

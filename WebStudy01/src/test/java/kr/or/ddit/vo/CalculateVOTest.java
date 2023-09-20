@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-import kr.or.ddit.calculate.controller.NumericOperatorType;
+import kr.or.ddit.calculate.NumericOperatorType;
 
 class CalculateVOTest {
 
