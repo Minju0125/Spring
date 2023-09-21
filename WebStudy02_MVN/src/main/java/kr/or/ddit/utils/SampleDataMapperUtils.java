@@ -11,18 +11,17 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.text.WordUtils;
 
 public class SampleDataMapperUtils {
-	public static String snakeToCamel(String columnName) {
-		String columName = "ADRS_NO";
+	public static String snakeToCamel(String columName) {
 		String propName = WordUtils.capitalizeFully(columName, '_');
-		System.out.println(propName);
+//		System.out.println(propName);
 		propName = StringUtils.replace(propName, "_", "");
-		System.out.println(propName);
+//		System.out.println(propName);
 		propName = WordUtils.uncapitalize(propName);
-		System.out.println(propName);
+//		System.out.println(propName);
 		return propName;
 	}
 
-	public static <T> T recordToVO(ResultSet rs, Class<?> resultType) throws Exception {
+	public static <T> T recordToVO(ResultSet rs, Class<T> resultType) throws SQLException {
 		try {
 			// AddressVO vo = new AddressVO();
 			Object vo = resultType.newInstance(); // 이걸 사용하면 알아서 기본 생성자

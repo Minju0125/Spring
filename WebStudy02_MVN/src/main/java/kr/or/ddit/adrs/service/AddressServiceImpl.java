@@ -33,8 +33,7 @@ public class AddressServiceImpl implements AddressService{
 
 	@Override
 	public boolean removeAddress(int adrsNo) {
-		// TODO Auto-generated method stub
-		return false;
+		int rowcnt = dao.deleteAddress(adrsNo);
+		return rowcnt>=1;
 	}
-
 }

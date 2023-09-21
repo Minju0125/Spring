@@ -14,14 +14,14 @@ import org.apache.commons.lang3.StringUtils;
 
 import kr.or.ddit.login.service.AuthenticateService;
 import kr.or.ddit.login.service.AuthenticateServiceImpl;
-import kr.or.ddit.vo.MemberVO2;
+import kr.or.ddit.vo.MemberVO;
 
 @WebServlet("/login/loginProcess.do")
 public class LoginProcessControllerServlet extends HttpServlet{
 	private AuthenticateService service = new AuthenticateServiceImpl();
 	
 	//모듈화를 통해 책임 분리 - 검증
-	private boolean validate(MemberVO2 member) {
+	private boolean validate(MemberVO member) {
 		//null checking & white space checking
 		boolean valid = true;
 		StringUtils.isNotBlank(member.getMemId());
@@ -41,7 +41,7 @@ public class LoginProcessControllerServlet extends HttpServlet{
 		String memPass = req.getParameter("memPass");
 		String idSave = req.getParameter("idSave"); //saveId/null
 		
-		MemberVO2 inputData = new MemberVO2();
+		MemberVO inputData = new MemberVO();
 		inputData.setMemId(memId);
 		inputData.setMemPass(memPass);
 		

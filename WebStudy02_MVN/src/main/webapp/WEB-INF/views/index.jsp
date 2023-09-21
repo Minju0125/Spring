@@ -15,6 +15,7 @@ if(authId!=null){
 %>
 <form method="post" action="<%=request.getContextPath() %>/login/logout.do" id="logoutForm"></form>
 <h4><%=authId %><a href="javascript:;" id="logoutBtn">로그아웃</a></h4>
+<h4><a href="<%=request.getContextPath()%>/adrs/view">주소록</a></h4>
 <%
 }else{
 	%>

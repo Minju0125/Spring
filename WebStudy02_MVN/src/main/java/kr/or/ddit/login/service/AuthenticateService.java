@@ -1,6 +1,6 @@
 package kr.or.ddit.login.service;
 
-import kr.or.ddit.vo.MemberVO2;
+import kr.or.ddit.vo.MemberVO;
 
 /**
  * 사용자 인증을 담당하는 Business Logic Layer
@@ -8,5 +8,5 @@ import kr.or.ddit.vo.MemberVO2;
  */
 public interface AuthenticateService {
 	
-	public boolean authenticate(MemberVO2 inputData);
+	public boolean authenticate(MemberVO inputData);
 }

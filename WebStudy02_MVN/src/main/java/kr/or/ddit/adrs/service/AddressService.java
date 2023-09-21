@@ -10,6 +10,11 @@ import kr.or.ddit.vo.AddressVO;
  *
  */
 public interface AddressService {
+	/**
+	 * adrsVO을 파라미터로, insert 구문을 실행 
+	 * @param adrsVO
+	 * @return insert 명령성공시 1이상 반환, 실패시 0반환
+	 */
 	public boolean createAddress(AddressVO adrsVO);
 	
 	/**

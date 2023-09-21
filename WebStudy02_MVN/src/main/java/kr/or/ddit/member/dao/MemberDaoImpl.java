@@ -10,13 +10,13 @@ import java.sql.Statement;
 
 import kr.or.ddit.common.exception.PersistenceException;
 import kr.or.ddit.db.ConnectionFactory;
-import kr.or.ddit.vo.MemberVO2;
+import kr.or.ddit.vo.MemberVO;
 import oracle.ucp.common.Chunk.Metadata;
 
 public class MemberDaoImpl implements MemberDao {
 
 	@Override
-	public MemberVO2 selectMemberForAuth(MemberVO2 inputData){
+	public MemberVO selectMemberForAuth(MemberVO inputData){
 		
 		StringBuffer sql = new StringBuffer();
 		sql.append(" select mem_id, mem_pass, mem_name, mem_hp, mem_mail from member    ");
@@ -35,10 +35,10 @@ public class MemberDaoImpl implements MemberDao {
 				//ResultSet rs = stmt.executeQuery(sql.toString()); //5.쿼리실행
 				ResultSet rs = pstmt.executeQuery(); //5.쿼리실행(runtime에는 쿼리를 못가져감)
 				
-				MemberVO2 saved = null;
+				MemberVO saved = null;
 				
 				if(rs.next()) { 
-					saved = new MemberVO2();
+					saved = new MemberVO();
 					//엔터티를 자바 객체로 바꾸는 과정에서 코드 부하 (-> mybatis 사용 이유)
 					saved.setMemId(rs.getString("MEM_ID"));
 					saved.setMemPass(rs.getString("MEM_PASS"));
