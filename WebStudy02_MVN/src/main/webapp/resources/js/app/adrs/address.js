@@ -99,7 +99,6 @@ $(function(){
          })
    });
    
-   
    $(listBody).on('click','.modBtn',function(){
 		
 		let adrsTr = $(this).parents("tr:first");
@@ -107,11 +106,14 @@ $(function(){
 	    let adrsNo = $adrsTr.data("adrsNo");
 		$("#exampleModal").modal("show");
 		
+		
+		let adrsName = $("#adrsName").val();
+		let adrsHp = $("#adrsHp").val()    ;
+		let adrsAdd = $("#adrsAdd").val()  ;
 		$("#sendBtn").on("click", function(){
-			
-			let adrsName = $("#adrsName").val()
-			let adrsHp = $("#adrsHp").val()
-			let adrsAdd = $("#adrsAdd").val()
+			console.log(adrsName);
+			console.log(adrsHp);
+			console.log(adrsAdd);
 			let url = `${baseUrl}`;
 			
 			let data =

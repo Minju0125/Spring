@@ -20,9 +20,9 @@ class AddressDAOImplTest {
 	void testInsertAddress() {
 		AddressVO vo = new AddressVO();
 		vo.setMemId("a001");
-		vo.setAdrsName("테스트");
+		vo.setAdrsName("테스--------------");
 		vo.setAdrsHp("000-000-0000");
-		vo.setAdrsAdd("대전 오류");
+		vo.setAdrsAdd("대전 오류------------------");
 		int rowcnt = dao.insertAddress(vo);
 		assertEquals(1, rowcnt);
 	}

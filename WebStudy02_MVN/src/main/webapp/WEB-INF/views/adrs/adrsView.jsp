@@ -39,25 +39,21 @@
       </div>
       <div class="modal-body">
           <div class="mb-3">
-            <label for="recipient-name" class="col-form-label">회원ID(여긴고정값리드온리)</label>
-            <input type="text" class="form-control" id="memId">
-          </div>
-          <div class="mb-3">
-            <label for="recipient-name" class="col-form-label">이름</label>
+            <label for="recipient-adrsName" class="col-form-label">이름</label>
             <input type="text" class="form-control" id="adrsName">
           </div>
           <div class="mb-3">
-            <label for="recipient-name" class="col-form-label">휴대폰번호</label>
+            <label for="recipient-adrsHp" class="col-form-label">휴대폰번호</label>
             <input type="text" class="form-control" id="adrsHp">
           </div>
           <div class="mb-3">
-            <label for="recipient-name" class="col-form-label">주소</label>
+            <label for="recipient-adrsAdd" class="col-form-label">주소</label>
             <input type="text" class="form-control" id="adrsAdd">
           </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" id="sendBtn">Send message</button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="sendBtn">Send message</button>
       </div>
     </div>
   </div>
