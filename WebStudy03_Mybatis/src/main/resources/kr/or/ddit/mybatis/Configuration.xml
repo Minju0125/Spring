@@ -4,7 +4,7 @@
 	<properties resource="kr/or/ddit/db/dbinfo.properties"/>
 	<settings>
 		<setting name="mapUnderscoreToCamelCase" value="true"/>
-	
+		<setting name="jdbcTypeForNull" value="NULL" />
 	</settings>
 	
 	<typeAliases>
@@ -28,5 +28,7 @@
 	<mappers>
 		<mapper resource="kr/or/ddit/mybatis/mapper/Member.xml"/>
 		<mapper resource="kr/or/ddit/mybatis/mapper/Address.xml"/>
+		<mapper resource="kr/or/ddit/mybatis/mapper/DBProps.xml"/>
+		<mapper resource="kr/or/ddit/mybatis/mapper/Prod.xml"/>
 	</mappers>
 </configuration>

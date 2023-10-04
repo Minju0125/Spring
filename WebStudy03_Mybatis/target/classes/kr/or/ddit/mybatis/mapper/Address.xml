@@ -41,7 +41,8 @@
 	</update>
 	
 	<delete id="deleteAddress" parameterType="int">
-			DELETE FROM addressbook
-			WHERE ADRS_NO = #{code}
+		DELETE FROM addressbook
+		WHERE ADRS_NO = #{code}
 	</delete>
+	
 </mapper>

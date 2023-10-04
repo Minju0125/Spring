@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 import org.apache.commons.dbcp2.BasicDataSource;
+import org.apache.commons.dbcp2.ConnectionFactory;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -45,13 +46,6 @@ class ConnectionPoolingTest {
 
 	@Test
 	void test4() throws SQLException{
-		for(int i=0; i<100; i++) { //10번 연결했다가, 10번 끊기위해 (100번 돌리면 오류남)
-			try(
-					Connection conn = ConnectionFactory.getConnection();
-					){
-				
-			}
-		}
 	}
 	
 	//이 경우는 내부적으로 풀링 정책 설정하도록 할 수 있음

@@ -4,10 +4,9 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.Statement"%>
-<%@page import="java.sql.Connection"%>
-<%@page import="java.sql.DriverManager"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -33,32 +32,6 @@
 		DB는 connectfull 구조 이기 때문에 한번 수립한 connection은 계속 유지됨.
 		더이상 connection을 생성할 수 없어지면 서버가 다운됨.
 </pre>
-<%
-/*
-	//model1구조
-	
-	List<Map<String, Object>> list = new ArrayList<>();			
-	
-	try(		
-		Connection conn = ConnectionFactory.getConnection();
-		Statement stmt =  conn.createStatement(); //4. 쿼리객체 생성
-	){
-		StringBuffer sql = new StringBuffer();
-		sql.append(" select property_name, property_value, description");
-		sql.append(" from database_properties                         ");
-		ResultSet rs = stmt.executeQuery(sql.toString());//5.쿼리실행
-		
-		while(rs.next()){
-			Map<String, Object> record = new HashMap<>();
-			list.add(record);
-			record.put("propertyName", rs.getString("PROPERTY_NAME"));
-			record.put("propertyValue", rs.getString("PROPERTY_VALUE"));
-			record.put("description", rs.getString("DESCRIPTION"));
-		}
-	}
-*/
-List<DataBasePropertyVO> list = (List) request.getAttribute("list");
-%>
 <table>
 	<thead>
 		<tr>
@@ -68,25 +41,21 @@ List<DataBasePropertyVO> list = (List) request.getAttribute("list");
 		</tr>
 	</thead>
 	<tbody>
-		<%
-		if(list.isEmpty()){
-		%>
+		<c:set var="propList" value="${requestScope.list}"/>
+		<c:if test="${empty propList}">
 			<tr>
 				<td colspan="3">조회 결과 없음.</td>
 			</tr>
-		<%
-		}else{
-			for(DataBasePropertyVO vo : list){
-				%>
+		</c:if>
+		<c:if test="${not empty propList}">
+			<c:forEach items="${propList}" var="record">
 				<tr>
-					<td><%=vo.getPropertyName() %></td>
-					<td><%=vo.getPropertyValue() %></td>
-					<td><%=vo.getDescription() %></td>
+					<td>${record.propertyName}</td>
+					<td>${record.propertyValue}</td>
+					<td>${record.description}</td>
 				</tr>
-				<%
-			}
-		}
-	%>
+			</c:forEach>
+		</c:if>
 	</tbody>
 </table>
 </body>

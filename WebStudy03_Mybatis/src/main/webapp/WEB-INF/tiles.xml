@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+<!-- 	controller 媛 ?좏깮??view ?뺣낫 : /definition_name.tiles -->
+	<definition name="abstractDef" template="/WEB-INF/views/template_case1.jsp">
+		<put-attribute name="preScript" value="/includee/preScript.jsp"/>
+		<put-attribute name="postScript" value="/includee/postScript.jsp"/>
+	</definition>
+	
+	<definition name="index" extends="abstractDef">
+		<put-attribute name="content" value="/WEB-INF/views/index.jsp" />
+	</definition>
+	
+	<definition name="member/*" extends="abstractDef">
+		<put-attribute name="content" value="/WEB-INF/views/member/{1}.jsp" />
+	</definition>
+	
+	<definition name="prod/*" extends="abstractDef">
+		<put-attribute name="content" value="/WEB-INF/views/prod/{1}.jsp" />
+	</definition>
+	
+	
+	<definition name="adrs/adrsView" extends="abstractDef">
+		<put-attribute name="content" value="/WEB-INF/views/adrs/adrsView.jsp" />
+	</definition>
+	
+</tiles-definitions> 

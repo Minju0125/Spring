@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import kr.or.ddit.mvc.ViewResolverComposite;
+
 @WebServlet("/index.do")
 public class IndexControllerServlet extends HttpServlet{
 	@Override
@@ -21,7 +23,8 @@ public class IndexControllerServlet extends HttpServlet{
 		req.setAttribute("title", title);
 		
 		//view 를 선택하고, 이동
-		String viewName = "/WEB-INF/views/index.jsp"; //서버에서 이동하는 위임방식
-		req.getRequestDispatcher(viewName).forward(req, resp); //view 로 완전히 제어권 넘김
+		String viewName = "index"; //서버에서 이동하는 위임방식
+		new ViewResolverComposite().resolveView(viewName, req, resp);
+	
 	}
 }

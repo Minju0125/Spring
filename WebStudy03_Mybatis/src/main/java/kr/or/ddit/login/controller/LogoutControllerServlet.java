@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import kr.or.ddit.mvc.ViewResolverComposite;
+
 @WebServlet("/login/logout.do")
 public class LogoutControllerServlet extends HttpServlet{
 	@Override
@@ -31,13 +33,7 @@ public class LogoutControllerServlet extends HttpServlet{
 		session.invalidate(); //저장된 데이터가 있으면 다 지움 => 앞에서 remove 안해도됨
 		
 		//3. 만료 후, 웰컴페이지로 이동
-		String goPage = "redirect:/";
-		
-		if(goPage.startsWith("redirect")) { //redirection
-			String location = req.getContextPath() + goPage.substring("redirect:".length());
-			resp.sendRedirect(location); //goPage 에서 redirect 떼고 contextpath 붙여줘야함
-		}else { //dispatch
-			req.getRequestDispatcher(goPage).forward(req, resp);
-		}
+		String viewName = "redirect:/";
+		new ViewResolverComposite().resolveView(viewName, req, resp);
 	}
 }

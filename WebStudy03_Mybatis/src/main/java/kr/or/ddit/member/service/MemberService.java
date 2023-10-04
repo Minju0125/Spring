@@ -5,6 +5,7 @@ import java.util.List;
 import kr.or.ddit.common.enumpkg.ServiceResult;
 import kr.or.ddit.member.UserNotFoundException;
 import kr.or.ddit.vo.MemberVO;
+import kr.or.ddit.vo.PaginationInfo;
 
 /**
  * 회원 정보 관리를 위한 Business Logic Layer
@@ -28,9 +29,10 @@ public interface MemberService {
 	
 	/**
 	 * 관리자 용도로 사용될 회원 목록 조회
+	 * @param paging TODO
 	 * @return
 	 */
-	public List<MemberVO> retrieveMemberList();
+	public List<MemberVO> retrieveMemberList(PaginationInfo paging);
 	
 	
 	/////////////////아래 두개는 인증과정이 선행되어야함 !////////////////////
@@ -39,7 +41,7 @@ public interface MemberService {
 	 * @param member
 	 * @return INVALIDPASSWORD, OK, FAIL
 	 */
-	public ServiceResult ModifyMember(MemberVO member);
+	public ServiceResult modifyMember(MemberVO member);
 	//1)인증실패 2)인증성공후 수정실패 3) 인증성공후 수정완료
 	
 	/**

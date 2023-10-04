@@ -1,21 +1,29 @@
 package kr.or.ddit.servlet06.dao;
 
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.List;
 
-import kr.or.ddit.db.ConnectionFactory;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+
+import kr.or.ddit.db.CustomSqlSessionFactoryBuilder;
 import kr.or.ddit.vo.DataBasePropertyVO;
 
 //POJO(Plain Old Java Object)
-public class DataBasePropertyDAO {
+public class DataBasePropertyDAO{
+	private SqlSessionFactory sqlSessionFactory = 
+			CustomSqlSessionFactoryBuilder.getSqlSessionFactory(); //싱글톤으로 팩토리 받아오기
+	
+	//Mybatis 프레임워크는 필요한 객체를 대신 만들고, 어플리케이션 내부로 주입하는 역할을 함.
+	//-IOC (Inversion Of controll, DI : Dependency ㅑnjection) 패턴 활용 
 	public List<DataBasePropertyVO> selectDBPropertyList() {
-		List<DataBasePropertyVO> list = new ArrayList<>();
-
+		try(
+			SqlSession sqlSession = sqlSessionFactory.openSession();
+		){
+			return sqlSession.selectList("kr.or.ddit.servlet06.dao.DataBasePropertyDAO.selectDBPropertyList");
+		}
+	}
+}
+/*
 		try (Connection conn = ConnectionFactory.getConnection(); Statement stmt = conn.createStatement(); // 4. 쿼리객체 생성
 		) {
 			StringBuffer sql = new StringBuffer();
@@ -35,5 +43,4 @@ public class DataBasePropertyDAO {
 		} catch (SQLException e) {
 			throw new RuntimeException(e); //여기에 걸린다면 throw 에서 걸리기 때문에 throw 이후에 return 불가능
 		}
-	}
-}
+ */
