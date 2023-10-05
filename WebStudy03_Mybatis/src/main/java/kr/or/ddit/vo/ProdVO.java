@@ -1,35 +1,54 @@
 package kr.or.ddit.vo;
 
-import java.util.List;
 import java.util.Set;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
+import kr.or.ddit.validate.grouphint.InsertGroup;
+import kr.or.ddit.validate.grouphint.UpdateGroup;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.extern.slf4j.Slf4j;
+
 /**
- * 하나의 상품에 대한 정보를 캡슐화하기 위한 도메인 레이어
+ * 하나의 상품에 대한 정보를 캡슐화하기 위한 도메인 레이어.
  *
  */
-
 @Data
 @EqualsAndHashCode(of="prodId")
 public class ProdVO {
-	
+   
+   
+   //페이징
+   private int rnum;
+   
+   private int prodCount;
+   
    private int memCount;
    
-   
+   @NotBlank(groups=UpdateGroup.class)
    private String prodId;
+   @NotBlank(groups=InsertGroup.class)
    private String prodName;
+   @NotBlank(groups=InsertGroup.class)
    private String prodLgu;
+   @NotBlank(groups=InsertGroup.class)
    private String prodBuyer;
+   @NotNull
    private Integer prodCost;
+   @NotNull
    private Integer prodPrice;
    private Integer prodSale;
    private String prodOutline;
    private String prodDetail;
    private String prodImg;
+   @NotNull
+   @Min(0)
    private Integer prodTotalstock;
    private String prodInsdate;
+   @NotNull
+   @Min(0)
    private Integer prodProperstock;
    private String prodSize;
    private String prodColor;
@@ -39,9 +58,11 @@ public class ProdVO {
    private Integer prodQtysale;
    private Integer prodMileage;
    
-   private LprodVO lprod;   // has a (1:1 관계)
-                     //   상품 하나가 분류 하나에 소속되어있기 때문에 1:1 관계
-   private BuyerVO buyer;
    
-   private List<CartVO> cartList;
+   private LprodVO lprod;//has a (1:1 관계)
+   
+   private BuyerVO buyer; // has a 
+   
+   //하나의 상품에 대한 여러건의 구매기록
+   private Set<CartVO> cartList;// has many
 }

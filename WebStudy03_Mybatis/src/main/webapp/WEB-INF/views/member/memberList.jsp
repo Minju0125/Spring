@@ -82,7 +82,7 @@
 	$(":input[name=searchType]").val("${paging.simpleCondition.searchType}");
 	$(":input[name=searchWord]").val("${paging.simpleCondition.searchWord}");
 	function fn_paging(page){
-		searchForm.page	.value= page;
+		searchForm.page.value= page;
 		searchForm.requestSubmit();
 	}
 	

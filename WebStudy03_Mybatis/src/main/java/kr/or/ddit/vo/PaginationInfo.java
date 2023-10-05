@@ -26,7 +26,8 @@ public class PaginationInfo<T> {
 
 private int totalRecord;   // select 쿼리 필요
    private int currentPage;   // request parameter로 확보
-   
+  
+   //개발자가 임의로 설정할 수 있는 값
    private int screenSize = 10;
    private int blockSize = 5;
    
@@ -39,14 +40,18 @@ private int totalRecord;   // select 쿼리 필요
    
    private List<T> dataList;
    
-   private SearchVO simpleCondition;
+   private SearchVO simpleCondition; //단순 키워드 검색 조건
+   private T detailCondition;
    
    public void setSimpleCondition(SearchVO simpleCondition) {
 	this.simpleCondition = simpleCondition;
    }
    
-   private PaginationRenderer renderer = new DefaultPaginationRenderer();
-   //private PaginationRenderer renderer = new BootstrapPaginationRenderer();
+   private PaginationRenderer renderer; //인터페이스 구현체로 rendering 함.
+   
+   public void setDetailCondition(T detailCondition) {
+	this.detailCondition = detailCondition;
+   }
    
    public void setRenderer(PaginationRenderer renderer) {
       this.renderer = renderer;
@@ -74,7 +79,7 @@ private int totalRecord;   // select 쿼리 필요
       return endPage < totalPage ? endPage : totalPage;
    }
    
-   public String getPagingHTML() {
+   public String getPagingHTML() { //페이지 이동을 위한 a 태그 만들어짐.
       return renderer.renderPagination(this);
    }
 }

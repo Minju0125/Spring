@@ -4,8 +4,8 @@
 
    <resultMap type="ProdVO" id="prodMap" autoMapping="true">
       <id property="prodId" column="PROD_ID"/>
-      <association property="buyer" javaType="BuyerVO" autoMapping="true"/>
-      <association property="lprod" javaType="LprodVO" autoMapping="true"/>
+      <association property="buyer" autoMapping="true"/>
+      <association property="lprod" autoMapping="true"/>
       <collection property="cartList" ofType="CartVO" autoMapping="true">
          <association property="member" autoMapping="true"/>
       </collection>
@@ -39,30 +39,105 @@
            PROD_ID=#{prodId}
    </select>
    
-   <select id="selectTotalRecord" resultType="int">
-   		SELECT COUNT(*) FROM PROD
+   <sql id="fromFrag">
+      FROM PRODVIEW
+   </sql>
+   
+   <sql id="searchFrag">
+      <trim prefix="WHERE" prefixOverrides="AND">
+      	<if test="@org.apache.commons.lang3.StringUtils@isNotBlank(detailCondition.prodLgu)">
+      		PROD_LGU = #{detailCondition.prodLgu}
+      	</if>
+      	<if test="@org.apache.commons.lang3.StringUtils@isNotBlank(detailCondition.prodBuyer)">
+      		AND PROD_BUYER = #{detailCondition.prodBuyer}
+      	</if>
+      	<if test="@org.apache.commons.lang3.StringUtils@isNotBlank(detailCondition.prodName)">
+      		AND INSTR(PROD_NAME, #{detailCondition.prodName}) > 0 
+      	</if>
+      	</trim>
+   </sql>
+   
+   <select id="selectTotalRecord" resultType="int" parameterType="PaginationInfo">
+      SELECT COUNT(*)
+      <include refid="fromFrag"/>
+      <include refid="searchFrag"/>
    </select>
 
-	<select id="selectProdList" parameterType="PaginationInfo" resultType="ProdVO">
-		SELECT B.*
-			FROM(
-			    SELECT ROWNUM RNUM, A.*
-			    FROM(
-			    SELECT
-			        PROD_ID, PROD_NAME
-			        ,LPROD_NM "lprod.lprodNm"
-			        ,BUYER_NAME "buyer.buyerName"
-			        ,(
-			            SELECT COUNT(CART_MEMBER)
-			            FROM CART
-			            WHERE CART_PROD=PROD_ID
-			        ) MEM_COUNT
-			    FROM PROD INNER JOIN LPROD ON(PROD_LGU=LPROD_GU)
-			            INNER JOIN BUYER ON(PROD_BUYER=BUYER_ID)
-			    ORDER BY PROD_ID
-			    ) A
-			) B
-		WHERE RNUM BETWEEN #{startRow} AND #{endRow}
-		
-	</select>   
+   <select id="selectProdList" parameterType="PaginationInfo" resultType="ProdVO">
+      SELECT B.*
+      FROM (
+          SELECT ROWNUM RNUM, A.*
+              FROM (
+              SELECT 
+                   PROD_ID, PROD_NAME, PROD_SALE, PROD_COST, PROD_MILEAGE
+                  , LPROD_NM "lprod.lprodNm"
+                  , BUYER_NAME "buyer.buyerName"
+                  , (
+                      SELECT COUNT(DISTINCT CART_MEMBER)
+                      FROM CART 
+                      WHERE CART_PROD = PROD_ID
+                  ) MEM_COUNT
+              <include refid="fromFrag"/>
+              <include refid="searchFrag"/>
+              ORDER BY PROD_ID
+          ) A
+      ) B
+       <![CDATA[
+       WHERE RNUM >= #{startRow} AND RNUM <= #{endRow}
+       ]]>
+   </select>
+   
+   <insert id="insertProd" parameterType="ProdVO">
+   	<selectKey order="BEFORE" resultType="String" keyProperty="prodId">
+		SELECT #{prodLgu}||
+		    LPAD(
+		        NVL(TO_NUMBER(SUBSTR(MAX(prod_id),LENGTH(#{prodLgu})+1)),0)+1,
+		        6,'0')
+		FROM PROD 
+		WHERE PROD_LGU=#{prodLgu}
+   	</selectKey>
+   	     INSERT INTO prod (
+   	     	PROD_ID
+		      ,PROD_NAME,
+		      PROD_LGU,
+		      PROD_BUYER,
+		      PROD_COST,
+		      PROD_PRICE,
+		      PROD_SALE,
+		      PROD_OUTLINE,
+		      PROD_DETAIL,
+		      PROD_IMG,
+		      PROD_TOTALSTOCK,
+		      PROD_INSDATE,
+		      PROD_PROPERSTOCK,
+		      PROD_SIZE,
+		      PROD_COLOR,
+		      PROD_DELIVERY,
+		      PROD_UNIT,
+		      PROD_QTYIN,
+		      PROD_QTYSALE,
+		      PROD_MILEAGE
+		   ) VALUES (
+		      #{prodId, jdbcType=VARCHAR}
+				,#{prodName, jdbcType=VARCHAR}
+				,#{prodLgu, jdbcType=CHAR}
+				,#{prodBuyer, jdbcType=CHAR}
+				,#{prodCost, jdbcType=NUMERIC}
+				,#{prodPrice, jdbcType=NUMERIC}
+				,#{prodSale, jdbcType=NUMERIC}
+				,#{prodOutline, jdbcType=VARCHAR}
+				,#{prodDetail, jdbcType=CLOB}
+				,#{prodImg, jdbcType=VARCHAR}
+				,#{prodTotalstock, jdbcType=NUMERIC}
+				,#{prodInsdate, jdbcType=DATE}
+				,#{prodProperstock, jdbcType=NUMERIC}
+				,#{prodSize, jdbcType=VARCHAR}
+				,#{prodColor, jdbcType=VARCHAR}
+				,#{prodDelivery, jdbcType=VARCHAR}
+				,#{prodUnit, jdbcType=VARCHAR}
+				,#{prodQtyin, jdbcType=NUMERIC}
+				,#{prodQtysale, jdbcType=NUMERIC}
+				,#{prodMileage, jdbcType=NUMERIC}
+		   )
+   </insert>
 </mapper>
