@@ -1,6 +1,7 @@
 package kr.or.ddit.member.controller;
 
 import java.io.IOException;
+import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -61,10 +62,10 @@ public class MemberDeleteController extends HttpServlet{
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		HttpSession session = req.getSession();
-		String memId = (String)session.getAttribute("authId");
-		//req.getUserPrincipal();
-		req.setCharacterEncoding("UTF-8");
 		
+		Principal principal = req.getUserPrincipal(); //memberVO wrapper
+		
+		String memId = principal.getName();
 		String password = req.getParameter("password");
 		
 		MemberVO inputData = new MemberVO();

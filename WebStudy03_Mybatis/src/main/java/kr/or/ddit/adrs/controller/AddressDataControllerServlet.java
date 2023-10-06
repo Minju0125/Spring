@@ -2,6 +2,7 @@ package kr.or.ddit.adrs.controller;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,9 +35,12 @@ public class AddressDataControllerServlet extends HttpServlet{
 		boolean valid = lastIdx >= baseLen && lastIdx < uriLen - 1;
 		System.out.printf("%s : %b\n", uri, valid);
 		
-		String authId = (String) req.getSession().getAttribute("authId");
-		List<AddressVO> adrsList = service.retriveAddressList(authId);
+		//String authId = (String) req.getSession().getAttribute("authId");
 		
+		Principal principal = req.getUserPrincipal(); //memberVO wrapper
+		String memId = principal.getName();
+		
+		List<AddressVO> adrsList = service.retriveAddressList(memId);
 		req.setAttribute("adrsList", adrsList);
 		
 		String goPage = "/jsonView.view";

@@ -42,6 +42,7 @@ public class ProdVO {
    private Integer prodSale;
    private String prodOutline;
    private String prodDetail;
+   @NotBlank
    private String prodImg;
    @NotNull
    @Min(0)
@@ -57,7 +58,6 @@ public class ProdVO {
    private Integer prodQtyin;
    private Integer prodQtysale;
    private Integer prodMileage;
-   
    
    private LprodVO lprod;//has a (1:1 관계)
    

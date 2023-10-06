@@ -1,6 +1,7 @@
 package kr.or.ddit.member.controller;
 
 import java.io.IOException;
+import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,8 +28,12 @@ public class MemberUpdateControllerServlet extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		//Model
-		String loginId = (String)req.getSession().getAttribute("authId");
-		MemberVO member = service.retrieveMember(loginId);
+		//String loginId = (String)req.getSession().getAttribute("authId"); //principal 쓰기 전
+		
+		Principal principal = req.getUserPrincipal(); //memberVO wrapper
+		String memId = principal.getName();
+		
+		MemberVO member = service.retrieveMember(memId);
 		req.setAttribute("member", member);
 		
 		String viewName ="member/memberForm";
@@ -37,9 +42,6 @@ public class MemberUpdateControllerServlet extends HttpServlet{
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-		// 1. 디코딩 설정
-		req.setCharacterEncoding("UTF-8");
 
 		// 2. 파라미터 확보 --> MemberVO
 		MemberVO member = new MemberVO();

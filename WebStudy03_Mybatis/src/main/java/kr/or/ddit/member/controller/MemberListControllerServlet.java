@@ -35,7 +35,6 @@ public class MemberListControllerServlet extends HttpServlet{
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		req.setCharacterEncoding("UTF-8");
 		
 		//searchType, searchWord는 optional data => 검증의 대상이 아님
 		String searchType = req.getParameter("searchType");

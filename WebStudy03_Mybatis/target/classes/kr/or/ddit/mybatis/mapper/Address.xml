@@ -24,10 +24,12 @@
 			)
 	</insert>
 
-	<select id="selectAddressList" parameterType="String" resultType="AddressVO">
-		SELECT ADRS_NO, MEM_ID, ADRS_NAME, ADRS_HP, ADRS_ADD
-		FROM ADDRESSBOOK                                    
-		WHERE MEM_ID = #{adrsNo}     
+	<select id="selectAddressList" parameterType="string" resultType="AddressVO">
+		 SELECT                                 
+		     ADRS_NO,    MEM_ID,    ADRS_NAME,  
+		     ADRS_HP,    ADRS_ADD               
+		 FROM    ADDRESSBOOK                
+		 WHERE MEM_ID = #{noname}              
 	</select>
 	
 	<update id="updateAddress" parameterType="AddressVO">

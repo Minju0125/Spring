@@ -33,7 +33,6 @@ public class ProdListControllerServlet extends HttpServlet{
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		req.setCharacterEncoding("UTF-8");
 		
 		ProdVO detailCondition = new ProdVO();
 		PopulateUtils.populate(detailCondition, req.getParameterMap());

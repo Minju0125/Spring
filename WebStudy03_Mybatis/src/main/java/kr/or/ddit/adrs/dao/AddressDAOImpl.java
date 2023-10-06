@@ -14,15 +14,12 @@ public class AddressDAOImpl implements AddressDAO{
 	
 	@Override
 	public List<AddressVO> selectAddressList(String memId) {
-		try(	
-				SqlSession sqlSession = sqlSessionFactory.openSession();
-		){ 
-			//파라미터 타입에 맞는 인자가 전달되어야함.
+		try(
+			SqlSession sqlSession = sqlSessionFactory.openSession();	
+		){
 //			return sqlSession.selectList("kr.or.ddit.adrs.dao.AddressDAO.selectAddressList", memId);
-			AddressDAO mapperProxy =  sqlSession.getMapper(AddressDAO.class);
-			//위에서 반한된는 객체는 가짜야~
-			return mapperProxy.selectAddressList(memId);//오류를 덜 발생시키는 코드 (타입안정성 보장 & 오타방지)
-			//
+			AddressDAO mapperProxy = sqlSession.getMapper(AddressDAO.class);
+			return mapperProxy.selectAddressList(memId);
 		}
 	}
 	

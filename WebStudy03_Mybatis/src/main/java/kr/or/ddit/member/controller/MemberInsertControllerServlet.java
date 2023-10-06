@@ -33,9 +33,6 @@ public class MemberInsertControllerServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-		// 1. 디코딩 설정
-		req.setCharacterEncoding("UTF-8");
-
 		// 2. 파라미터 확보 --> MemberVO
 		MemberVO member = new MemberVO();
 		req.setAttribute("member", member);

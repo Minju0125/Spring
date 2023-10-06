@@ -18,11 +18,7 @@ public class AddressServiceImpl implements AddressService{
 
 	@Override
 	public List<AddressVO> retriveAddressList(String memId) {
-		List<AddressVO> list= dao.selectAddressList(memId);
-		if(list.size()>0) {
-			return list;
-		}
-		return null;
+		return dao.selectAddressList(memId);
 	}
 
 	@Override
