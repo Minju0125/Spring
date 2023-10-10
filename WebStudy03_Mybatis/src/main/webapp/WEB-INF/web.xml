@@ -18,6 +18,14 @@
   	<url-pattern>/*</url-pattern>
   </filter-mapping>
  
+  <filter>
+  	<filter-name>GeneratePrincipalFilter</filter-name>
+  	<filter-class>kr.or.ddit.filter.GeneratePrincipalFilter</filter-class>
+  </filter>
+  <filter-mapping>
+  	<filter-name>GeneratePrincipalFilter</filter-name>
+  	<url-pattern>/*</url-pattern>
+  </filter-mapping>
  	
  	<filter>
  		<filter-name>MultipartFilter</filter-name>
@@ -27,18 +35,6 @@
  		<filter-name>MultipartFilter</filter-name>
  		<url-pattern>/*</url-pattern>
  	</filter-mapping>
- 
- 
-  <filter>
-  	<filter-name>GeneratePrincipalFilter</filter-name>
-  	<filter-class>kr.or.ddit.filter.GeneratePrincipalFilter</filter-class>
-  </filter>
-  <filter-mapping>
-  	<filter-name>GeneratePrincipalFilter</filter-name>
-  	<url-pattern>/*</url-pattern>
-  </filter-mapping>
-  
-  
   
   <listener>
     <listener-class>org.apache.tiles.web.startup.simple.SimpleTilesListener</listener-class>

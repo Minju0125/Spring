@@ -139,7 +139,7 @@
           MEM_HOMETEL,    MEM_COMTEL,    MEM_HP,
           MEM_MAIL,    MEM_JOB,    MEM_LIKE,
           MEM_MEMORIAL,    MEM_MEMORIALDAY,    MEM_MILEAGE,
-          MEM_DELETE
+          MEM_DELETE, MEM_IMG
           , PROD_ID, PROD_NAME, PROD_COST, PROD_PRICE
           , LPROD_NM
           , BUYER_NAME
@@ -169,6 +169,9 @@
           , MEM_LIKE
           , MEM_MEMORIAL
           , MEM_MEMORIALDAY
+          <if test="memImg neq null">
+          , MEM_IMG
+          </if>
       ) VALUES (
          #{memId,jdbcType=VARCHAR}
          , #{memPass,jdbcType=VARCHAR}
@@ -187,6 +190,9 @@
          , #{memLike,jdbcType=VARCHAR}
          , #{memMemorial,jdbcType=VARCHAR}
          , #{memMemorialday,jdbcType=DATE}
+          <if test="memImg neq null">
+           , #{memImg,jdbcType=BLOB}
+          </if>
       )
    </insert>
    
@@ -206,6 +212,9 @@
             ,MEM_LIKE=#{memLike,jdbcType=VARCHAR}
             ,MEM_MEMORIAL=#{memMemorial,jdbcType=VARCHAR}
             ,MEM_MEMORIALDAY=#{memMemorialday,jdbcType=DATE}
+             <if test="memImg neq null">
+	          , MEM_IMG = #{memImg, jdbcType=BLOB}
+	          </if>
          WHERE
              MEM_ID=#{memId}
             AND MEM_PASS=#{memPass}
@@ -217,15 +226,4 @@
          MEM_DELETE = 'Y'
       WHERE MEM_ID = #{memId}
    </delete>
-   
 </mapper>
-
-
-
-
-
-
-
-
-
-
