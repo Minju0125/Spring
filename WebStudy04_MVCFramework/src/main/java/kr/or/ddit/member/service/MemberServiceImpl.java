@@ -2,14 +2,11 @@ package kr.or.ddit.member.service;
 
 import java.util.List;
 
-import org.apache.ibatis.javassist.NotFoundException;
-
 import kr.or.ddit.common.enumpkg.ServiceResult;
 import kr.or.ddit.login.service.AuthenticateService;
 import kr.or.ddit.login.service.AuthenticateServiceImpl;
 import kr.or.ddit.member.dao.MemberDao;
 import kr.or.ddit.member.dao.MemberDaoImpl;
-import kr.or.ddit.member.dao.MemberDao;
 import kr.or.ddit.vo.MemberVO;
 import kr.or.ddit.vo.PaginationInfo;
 
@@ -36,6 +33,7 @@ public class MemberServiceImpl implements MemberService{
 		 int totalRecord = dao.selectTotalRecord(paging);
 		 paging.setTotalRecord(totalRecord);
 		 List<MemberVO> dataList =  dao.selectMemberList(paging);
+		 paging.setDataList(dataList);
 		 return dataList;
 	}
 	@Override

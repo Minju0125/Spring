@@ -52,11 +52,22 @@
 	<servlet>
 		<servlet-name>DispatcherServlet</servlet-name>
 		<servlet-class>kr.or.ddit.mvc.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>prefix</param-name>
+			<param-value>/WEB-INF/views/</param-value>
+		</init-param>
+		<init-param>
+			<param-name>suffix</param-name>
+			<param-value>.jsp</param-value>
+		</init-param>
 		<load-on-startup>1</load-on-startup>
 		<multipart-config></multipart-config>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>DispatcherServlet</servlet-name>
 		<url-pattern>*.do</url-pattern>
+		<url-pattern>/index.do</url-pattern>
+		<url-pattern>/mypage</url-pattern>
+		<url-pattern>/adrs/*</url-pattern>
 	</servlet-mapping>
 </web-app>

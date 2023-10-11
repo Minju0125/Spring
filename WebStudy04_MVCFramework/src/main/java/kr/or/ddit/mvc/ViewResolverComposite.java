@@ -11,18 +11,28 @@ import javax.servlet.http.HttpServletResponse;
 public class ViewResolverComposite implements ViewResolver {
 	private List<ViewResolver> viewResolvers; //agreegation 관계 형성
 
+	private String prefix;
+	private String suffix;
 	
 	//기본생성자
 	public ViewResolverComposite() {
 		super();
 		viewResolvers = new ArrayList<>();
-		viewResolvers.add(new BeanNameViewResolver()); //tiles 보다 검색이 빠르므로 가장 처음으로 검색
-		viewResolvers.add(new TilesViewResolver()); //tiles definition 용
 		
-		InternalResourceViewResolver resolver =  new InternalResourceViewResolver(); //single jsp 에서 
-		resolver.setPrefix("/WEB-INF/views/");
-		resolver.setSuffix(".jsp");
-		viewResolvers.add(resolver); //InternalResourceViewResolver 의 우선순위는 항상 마지막 순서.
+	}
+	
+	@Override
+	public void setPrefix(String prefix) {
+		this.prefix = prefix;
+	}
+	
+	@Override
+	public void setSuffix(String suffix) {
+		this.suffix = suffix;
+	}
+	
+	public void addViewResolver(ViewResolver resolver) {
+		viewResolvers.add(resolver);
 	}
 
 	@Override

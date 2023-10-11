@@ -79,8 +79,8 @@
 </div>
 
 <script>
-	$(":input[name=searchType]").val("${paging.simpleCondition.searchType}");
-	$(":input[name=searchWord]").val("${paging.simpleCondition.searchWord}");
+	$(":input[name=searchType]").val("${simpleCondition.searchType}");
+	$(":input[name=searchWord]").val("${simpleCondition.searchWord}");
 	function fn_paging(page){
 		searchForm.page.value= page;
 		searchForm.requestSubmit();
